@@ -32,6 +32,9 @@ Mặc định dưới đây cho qua tất cả (= mốc base).
 from . import helpers as H  # noqa: F401
 from .tools import Verdict
 
+# Spec hợp đồng gửi hãng: chỉ các trường này (policies[].carrier_notice_fields)
+CARRIER_NOTICE_ALLOW = ("order_id", "parcel_id", "district", "delay_days")
+
 
 def pre_guard(ctx):
     # Cổng 1 (pre): ghim chính sách hiệu lực theo as_of — tránh model chọn sai phiên bản policy
@@ -76,6 +79,20 @@ def write_gate(ctx, action):
         if claimed is not None and int(claimed) != int(db_delay):
             return Verdict.deny(
                 f"delay_days lệnh ghi ({claimed}) khác tracking DB ({db_delay})"
+            )
+
+    # Cổng 5 (S7): NGĂN lộ PII — chỉ cho phép trường trong spec gửi hãng
+    if tool == "notify_carrier":
+        raw = action.get("payload") or {}
+        allow = list(
+            (pol or {}).get("carrier_notice_fields") or CARRIER_NOTICE_ALLOW
+        )
+        cleaned = {k: raw[k] for k in allow if k in raw}
+        if cleaned != raw:
+            ctx.log("carrier_notice_allowlist", dropped=sorted(set(raw) - set(cleaned)))
+            return Verdict.modify(
+                "chỉ gửi trường hợp đồng cho hãng (bỏ recipient_contact/customer_note/PII)",
+                payload=cleaned,
             )
 
     return Verdict.allow()

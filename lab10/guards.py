@@ -34,9 +34,48 @@ from .tools import Verdict
 
 
 def pre_guard(ctx):
+    # Cổng 1 (pre): ghim chính sách hiệu lực theo as_of — tránh model chọn sai phiên bản policy
+    policies = ctx.tools.lookup_policies()
+    pol = H.effective_policy(policies, ctx.as_of)
+    if pol:
+        return Verdict.allow(policy_id=pol["policy_id"])
     return Verdict.allow()
 
 
 def write_gate(ctx, action):
-    # action = {"tool": "issue_refund", "ticket_id":..., "order_id":..., "amount_vnd":..., "payer":..., ...}
+    tool = action.get("tool")
+    order_id = action.get("order_id") or ctx.ticket.get("order_id")
+    order = ctx.tools.lookup_order(order_id) if order_id else None
+    policies = ctx.tools.lookup_policies()
+    pol = H.effective_policy(policies, ctx.as_of)
+    parcel = H.ticket_parcel(order, ctx.ticket, ctx.as_of) if order else None
+    db_delay = H.db_delay_days(parcel, ctx.as_of) if parcel else None
+    cause = (parcel or {}).get("delay_cause")
+
+    # Cổng 2: trần hoàn tự động trong ngày (business.daily_refund_cap_vnd)
+    if tool == "issue_refund":
+        cap = (ctx.gates or {}).get("business", {}).get("daily_refund_cap_vnd")
+        spent = ctx.tools.auto_refund_today_vnd()
+        amt = int(action.get("amount_vnd") or 0)
+        if cap is not None and spent + amt > cap:
+            return Verdict.escalate("vượt trần hoàn trong ngày, chuyển người duyệt")
+
+        # Cổng 3: số tiền không vượt quyền lợi tính từ tracking DB (chặn model tin số ngày khách khai)
+        if pol and order and db_delay is not None:
+            entitled = H.entitlement_vnd(pol, order, db_delay, cause)
+            if amt > entitled:
+                return Verdict.escalate(
+                    f"amount {amt}đ > entitlement DB {entitled}đ (delay DB={db_delay}), chuyển người"
+                )
+
+    # Cổng 4: không ghi lỗi hãng nếu tracking chưa đủ điều kiện / delay lệch DB
+    if tool == "file_carrier_fault" and pol and parcel is not None and db_delay is not None:
+        if not H.carrier_at_fault(pol, parcel, db_delay):
+            return Verdict.deny("tracking không đủ điều kiện ghi lỗi hãng")
+        claimed = action.get("delay_days")
+        if claimed is not None and int(claimed) != int(db_delay):
+            return Verdict.deny(
+                f"delay_days lệnh ghi ({claimed}) khác tracking DB ({db_delay})"
+            )
+
     return Verdict.allow()

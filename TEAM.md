@@ -6,7 +6,7 @@
 - Lớp: `L3B`
 - Repo của bàn: `K5-L3B-DAY10-ABC-PoCtoPilotGate1`
 - URL: https://github.com/cuong-huynh/K5-L3B-DAY10-ABC-PoCtoPilotGate1
-- Thẻ sự cố đã bốc (S1–S8):
+- Thẻ sự cố đã bốc (S1–S8): _(chưa — repo thẻ GitHub 404 / chờ Lab Coach mở)_
 
 ## Thành viên
 
@@ -46,15 +46,17 @@ Kỹ sư cổng A · trưởng nhóm repo; câu 2.1–2.2, 2.6; file `lab10/guar
 
 ### Đóng góp cụ thể
 
-...
+Trưởng nhóm repo; git identity MSSV; câu 1.3 Phiếu A; chạy eval/gate/trace base; bảng soát lỗi T-002@55; code 2–3 cổng `guards.py` (pin policy, trần hoàn + entitlement DB, deny fault lệch DB); checkpoint vòng 1; hỗ trợ B8 v1; thêm `model_override_rate` monitor; chuẩn bị vòng 2 chờ thẻ.
 
 ### Bằng chứng
 
-...
+- Commit ký: `e170383` · checkpoint `70a927e7`
+- Runs: `R-base-before-20261119-152257-e58096`, `R-base-after-20261119-152310-e58096`, `R-base-prepared-20261119-152317-e58096`
+- Adhoc O-1002: escalate khi khai delay > DB
 
 ### Exit ticket
 
-...
+Gate 1 v1 chọn Tiếp tục trên prepared vì mọi ngưỡng required đạt; còn thiếu gói sự cố để chốt v2. Bài học: ký tiêu chí trước eval và neo cổng vào tracking DB, không vào chữ khách.
 
 ## NguyenPhanTuanDuc-2A202603818
 

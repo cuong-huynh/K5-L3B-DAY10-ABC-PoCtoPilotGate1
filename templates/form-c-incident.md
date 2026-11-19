@@ -1,6 +1,8 @@
 # Phiếu C · Sự cố và quyết định v2 · Khối 3 (phút 125–200)
 
-**Bàn:** ______ · **Thẻ đã bốc:** ___ *(để trống tới phút 125; bốc số xong thì ghi đúng số đó, ví dụ `S3`. Lab Coach đối chiếu với sổ; lệnh tự kiểm tra in dòng này trong report.)*
+**Bàn:** ABC · **Thẻ đã bốc:** _(chưa — `git fetch` repo cards trả 404; chờ Lab Coach mở rồi thay Sx)_ *(để trống tới phút 125; bốc số xong thì ghi đúng số đó, ví dụ `S3`. Lab Coach đối chiếu với sổ; lệnh tự kiểm tra in dòng này trong report.)*
+
+> **Trạng thái vòng 2 (Cường):** đã sẵn `guards.py` + `monitors.model_override_rate` + `operating_gates` mode all. Chưa chạy lệnh 6/`grade --incident` vì chưa có `incidents/Sx/`.
 
 Mở `incidents/Sx/card.md` của đúng số đã bốc. Các bước trên thẻ trỏ về đúng mục trong phiếu này. Mục C3 chỉ điền phần ứng với
 số thẻ của bàn; các phần khác để trống.
@@ -330,14 +332,14 @@ Thẻ S5 dùng mục này cho một con số kinh doanh: chi phí mỗi ticket t
 
 | | Chỉ số theo dõi mới của bàn |
 |---|---|
-| **Tên trong `MONITORS`** | |
-| **Bước / hành vi được đo** | |
-| **Thước đo** (một câu, có đơn vị) | |
-| **Dữ liệu** (trường nào của trial, không có nhãn) | |
-| **Cách tính** (công thức, mẫu số, cách xử lý ca thiếu dữ liệu) | |
-| **Khung thời gian / ngưỡng báo động** | |
-| **Điểm mù** (chỉ số này KHÔNG thấy gì) | |
-| Giá trị trên bộ nền · trên thẻ (đọc mục `monitor` của report) | |
+| **Tên trong `MONITORS`** | `model_override_rate` |
+| **Bước / hành vi được đo** | Model đè số ngày từ ticket lên tracking DB |
+| **Thước đo** (một câu, có đơn vị) | Tỉ lệ trial có sự kiện `model_override` (0–1) |
+| **Dữ liệu** (trường nào của trial, không có nhãn) | `trial.events[]` type `model_override` |
+| **Cách tính** (công thức, mẫu số, cách xử lý ca thiếu dữ liệu) | số trial có ≥1 model_override ÷ số trial; events rỗng = không override |
+| **Khung thời gian / ngưỡng báo động** | Theo batch eval/ngày; báo động nếu rate tăng so với baseline |
+| **Điểm mù** (chỉ số này KHÔNG thấy gì) | Không thấy DB sai; không thấy hoàn oan nếu không có override event |
+| Giá trị trên bộ nền · trên thẻ (đọc mục `monitor` của report) | nền: đo sau khi có thẻ · thẻ: _(chờ Sx)_ |
 
 ---
 

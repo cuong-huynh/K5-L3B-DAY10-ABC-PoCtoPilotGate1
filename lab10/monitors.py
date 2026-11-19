@@ -19,7 +19,17 @@ def escalation_rate(trials):
     return sum(t["status"] == "escalated" for t in trials) / max(1, len(trials))
 
 
+def model_override_rate(trials):
+    """Tỉ lệ trial có sự kiện model_override (model đè số ngày từ ticket lên tracking DB)."""
+    n = 0
+    for t in trials:
+        if any(e.get("type") == "model_override" for e in (t.get("events") or [])):
+            n += 1
+    return n / max(1, len(trials))
+
+
 MONITORS = {
     "escalation_rate": escalation_rate,     # có sẵn; KHÔNG tính là metric mới của đội
+    "model_override_rate": model_override_rate,
 }
 STARTER_MONITORS = ("escalation_rate",)

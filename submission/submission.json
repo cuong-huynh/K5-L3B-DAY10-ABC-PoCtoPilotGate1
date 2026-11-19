@@ -1,12 +1,17 @@
 {
-  "team": "",
-  "members": [],
+  "team": "K5-L3B-DAY10-ABC-PoCtoPilotGate1",
+  "members": [
+    "HuynhVanCuong-2A202603866",
+    "NguyenPhanTuanDuc-2A202603818",
+    "PhamQuangDung-2A202603896",
+    "NguyenMinhPhuc-2A202603894"
+  ],
   "incident": "",
-  "decision_v1": "",
+  "decision_v1": "Tiếp tục",
   "decision_v2": "",
   "three_lines": {
-    "environment_assumption": "",
-    "reduce_or_prevent": "",
-    "measure_in_pilot": ""
+    "environment_assumption": "Tracking DB (delivered_date / delay_cause) là nguồn sự thật về độ trễ; chữ khách trong ticket có thể sai.",
+    "reduce_or_prevent": "Cổng vòng 1 NGĂN hoàn/ghi lỗi khi amount vượt entitlement DB hoặc delay lệch DB; trần ngày GIẢM thiệt hại tích lũy.",
+    "measure_in_pilot": "Đo lại model_override_rate, wrongful_refund và hàng chờ duyệt trên traffic thật 2 depot trước khi mở 100%."
   }
 }

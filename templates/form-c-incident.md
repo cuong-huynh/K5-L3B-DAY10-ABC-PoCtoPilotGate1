@@ -1,8 +1,6 @@
 # Phiếu C · Sự cố và quyết định v2 · Khối 3 (phút 125–200)
 
-**Bàn:** ABC · **Thẻ đã bốc:** _(chưa — `git fetch` repo cards trả 404; chờ Lab Coach mở rồi thay Sx)_ *(để trống tới phút 125; bốc số xong thì ghi đúng số đó, ví dụ `S3`. Lab Coach đối chiếu với sổ; lệnh tự kiểm tra in dòng này trong report.)*
-
-> **Trạng thái vòng 2 (Cường):** đã sẵn `guards.py` + `monitors.model_override_rate` + `operating_gates` mode all. Chưa chạy lệnh 6/`grade --incident` vì chưa có `incidents/Sx/`.
+**Bàn:** ABC · **Thẻ đã bốc:** S7 *(Lab Coach đối chiếu với sổ; lệnh tự kiểm tra in dòng này trong report.)*
 
 Mở `incidents/Sx/card.md` của đúng số đã bốc. Các bước trên thẻ trỏ về đúng mục trong phiếu này. Mục C3 chỉ điền phần ứng với
 số thẻ của bàn; các phần khác để trống.

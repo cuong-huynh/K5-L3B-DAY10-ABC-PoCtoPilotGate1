@@ -6,7 +6,7 @@
 - Lớp: `L3B`
 - Repo của bàn: `K5-L3B-DAY10-ABC-PoCtoPilotGate1`
 - URL: https://github.com/cuong-huynh/K5-L3B-DAY10-ABC-PoCtoPilotGate1
-- Thẻ sự cố đã bốc (S1–S8): _(chưa — repo thẻ GitHub 404 / chờ Lab Coach mở)_
+- Thẻ sự cố đã bốc (S1–S8): `S7`
 
 ## Thành viên
 
